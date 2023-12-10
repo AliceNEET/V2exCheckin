@@ -41,15 +41,27 @@ class V2ex():
         elif url != "/balance":
             headers = {"Referer": "https://www.v2ex.com/mission/daily"}
             data = {"once": url.split("=")[-1]}
-            _ = session.get(url="https://www.v2ex.com" + url, verify=False, headers=headers, params=data)
+            _ = session.get(
+                url="https://www.v2ex.com" + url,
+                verify=False,
+                headers=headers,
+                params=data,
+            )
         response = session.get(url="https://www.v2ex.com/balance", verify=False)
         total = re.findall(
-            pattern=r"<td class=\"d\" style=\"text-align: right;\">(\d+\.\d+)</td>", string=response.text
+            pattern=r"<td class=\"d\" style=\"text-align: right;\">(\d+\.\d+)</td>",
+            string=response.text,
         )
         total = total[0] if total else "签到失败"
-        today = re.findall(pattern=r'<td class="d"><span class="gray">(.*?)</span></td>', string=response.text)
+        today = re.findall(
+            pattern=r'<td class="d"><span class="gray">(.*?)</span></td>',
+            string=response.text,
+        )
         today = today[0] if today else "签到失败"
-        username = re.findall(pattern=r"<a href=\"/member/.*?\" class=\"top\">(.*?)</a>", string=response.text)
+        username = re.findall(
+            pattern=r"<a href=\"/member/.*?\" class=\"top\">(.*?)</a>",
+            string=response.text,
+        )
         username = username[0] if username else "用户名获取失败"
         msg += [
             {"name": "帐号信息", "value": username},
@@ -57,7 +69,9 @@ class V2ex():
             {"name": "帐号余额", "value": total},
         ]
         response = session.get(url="https://www.v2ex.com/mission/daily", verify=False)
-        data = re.findall(pattern=r"<div class=\"cell\">(.*?)天</div>", string=response.text)
+        data = re.findall(
+            pattern=r"<div class=\"cell\">(.*?)天</div>", string=response.text
+        )
         data = data[0] + "天" if data else "获取连续签到天数失败"
         msg += [
             {"name": "签到天数", "value": data},
@@ -65,7 +79,10 @@ class V2ex():
         return msg
 
     def main(self):
-        cookie = {item.split("=")[0]: item.split("=")[1] for item in self.check_item.get("cookie").split("; ")}
+        cookie = {
+            item.split("=")[0]: item.split("=")[1]
+            for item in self.check_item.get("cookie").split("; ")
+        }
         session = requests.session()
         if self.check_item.get("proxy", ""):
             proxies = {

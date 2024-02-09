@@ -3,7 +3,7 @@
 '''
 Author: JY
 Date: 2023-10-23 23:07:13
-LastEditTime: 2023-10-23 23:28:27
+LastEditTime: 2023-12-10 12:44:22
 LastEditors: JY
 Description: 
 FilePath: /v2ex-checkin/main.py
@@ -93,12 +93,12 @@ class V2ex():
         requests.utils.add_dict_to_cookiejar(session.cookies, cookie)
         session.headers.update(
             {
-                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36 Edg/87.0.664.66",
-                "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
+                "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36 Edg/121.0.0.0",
+                "accept-language": "zh",
             }
         )
         msg = self.sign(session=session)
+        print(msg)
         msg = "\n".join([f"{one.get('name')}: {one.get('value')}" for one in msg])
         return msg
 
